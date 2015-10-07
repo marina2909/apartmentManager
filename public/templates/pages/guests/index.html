@@ -1,0 +1,23 @@
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="setGuestName('{}')">
+	  Open Modal Dialog
+</button>
+
+<div class="guests-wrapper col-md-12 col-xs-12">
+	<table  class="table table-responsive table-hover" data-toggle="table">
+		<thead>
+		<tr>
+			<th>Name</th>
+			<th> Birthdate</th>
+			<th>Nationality</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr am-guest  guest="a" ng-repeat="a in guests | orderBy : 'name' " class="guests">
+			</tr>
+		</tbody>
+	</table>
+<div>
+
+<div modal-dialog>
+</div>

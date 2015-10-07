@@ -1,0 +1,60 @@
+body {
+   /*  background-image: url("light_alu.png"); */
+	/*font-family: 'Open Sans', sans-serifb !important;
+  margin: 0;
+  padding: 0;
+  color: #333;*/
+}
+/*h1, h2{
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 0px 0;
+    color: #3C860C;
+}
+h3, h4 {
+	color: #3C860C;
+	font-weight: bold;
+}*/
+/*.container{
+}
+.view{
+	margin-top: 5%;
+}
+
+
+
+.list-group{
+	margin-top: 18px;
+}
+a.list-group-item{
+  font-size: 20px;
+	color: #000;
+	text-decoration: none;
+	position: relative;
+  color: #353f49;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: #B6EB93;
+  border: 1px solid #353f49;
+}
+
+a.list-group-item:hover {
+  background-color:#3C860C;
+  border-color: #353f49;
+  color: #fff;
+}*/
+
+/*
+.apartment {
+  margin-bottom: 30px;
+}*/
+
+.guests-wrapper{
+	overflow: auto;
+	height: 300px;
+}
+
+.apartment-services{
+	margin: 2px;
+}

@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2><a ng-href="#/apartments/{{apartment.name}}">{{apartment.name}}</a></h2>
+  </div>
+  <div class="panel-body row">
+    <span class='col-xs-2'>
+      <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-triangle-left"></span></a>
+    </span>
+    <span class='col-xs-8'>
+      <div class="row text-nowrap">
+        <cite class='col-xs-12 h5'>{{apartment.description}}</cite>
+        <span class='col-xs-12 col-sm-offset-2 col-sm-4 text-center h4'>Daily price : <strong>{{apartment.price}}</strong></span>
+        <span class='col-xs-12 col-sm-4 text-center h4'> Size : <strong>{{apartment.size}}</strong> </span>
+      </div>
+      <div class='row text-nowrap'>
+        <span class='col-xs-12 col-sm-4 text-center h5'> Rooms : <strong>{{apartment.rooms}}</strong> </span>
+        <span class='col-xs-12 col-sm-4 text-center h5'> Default Occupancy : <strong>{{apartment.defaultOccupancy}}</strong> </span>
+        <span class='col-xs-12 col-sm-4 text-center h5'> May Occupancy : <strong>{{apartment.maxOccupancy}}</strong> </span>
+      </div>
+      <div class='row'>
+        <apartment-services class='col-xs-12 text-center' services='apartment.services'></apartment-services>
+        <span class='col-xs-12 text-center'>
+          <div class='row'>
+            <a ng-href="/bookings/{{apartment.name}}" class="btn btn-default col-xs-12 col-sm-4">Add New Booking</a>
+            <a ng-href='#/apartments/{{apartment.name}}/edit' class='btn btn-default col-xs-12 col-sm-4'>Edit</a>
+            <a ng-href='' class='btn btn-danger col-xs-12 col-sm-4'>Delete</a>
+          </div>
+        </span>
+      </div>
+    </span>
+  </div>
+</div>

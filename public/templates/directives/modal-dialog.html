@@ -1,0 +1,37 @@
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+		 <form ng-submit="saveGuest()">
+			<div class="row">
+				<div class="form-group col-xs-12 col-md-6">
+					<label class="sr-only" for="guestName">Name</label>
+					<input required type="text"  class="form-control" name="name" placeholder="Name" id="guestName"   ng-model="formData.name">
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+					<label class="sr-only" for="inputPrice">Price</label>
+					<input type="text" class="form-control" name="birthdate"  id="inputPrice" placeholder="Birthdate" ng-model="formData.birthdate">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-xs-12">
+					<label class="sr-only" for="guestDescription">Nationality</label>
+					<textarea type="text" class="form-control" name="description" placeholder="Nationality" id="guestDescription"
+					ng-model="formData.nationality"/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-default">Save changes</button>
+			</div>
+		</form>
+      </div>
+
+    </div>
+  </div>
+</div>

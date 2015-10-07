@@ -42,6 +42,22 @@ var Apartments = mongoose.model('Apartments');
 
 
 router.route('/')
+.put(parseUrlEncoded, function(request, response, next){
+  var newBody = request.body;
+  var name = newBody.name;
+  newBody.name = name[0].toUpperCase() + name.slice(1).toLowerCase();
+  var apartments = new Apartments(newBody);
+  apartments.isNew = false;
+  apartments.save(function(err, apartment){
+   if (err){
+     var error = new Error();
+     error.message = "Error executing  PUT call to /apartments /n" + err;
+     next(error);
+   } else {
+     response.status(201).json(newBody.name);
+   }
+ });
+})
 .get(function(request, response, next){
   Apartments.find(function(err, apartments){
     if (err){
@@ -52,10 +68,8 @@ router.route('/')
       response.json(apartments);
     }
   });
-})
-.put(function(request, response, next){
-  response.json(request.body);
 });
+
 
 
 router.route('/:name')

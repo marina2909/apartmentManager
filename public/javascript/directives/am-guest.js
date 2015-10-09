@@ -1,5 +1,5 @@
  angular.module("apartmentManagement")
-	.directive("amGuest", function($http){
+	.directive("amGuest", function($http, Guest){
 		return {
 			templateUrl : "templates/directives/am-guest.html",
 			scope:{
@@ -11,9 +11,7 @@
 					if (!confirm('Are you sure you want to delete this record')){
 						return false;
 					}
-					$http({method: 'DELETE'
-						, url: '/guests/'+name
-					}).then(function success(res){
+					Guest.delete(name).then(function success(res){
 						$(that).parents('tr').remove();
 					}, function error(err){
 						// TODO error handling

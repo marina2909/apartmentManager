@@ -89,6 +89,17 @@ router.route('/:name')
       response.json(apartment[0]);
     }
   });
+})
+.delete(function(request, response){
+  Apartments.findOneAndRemove({name : request.apartmentName}, function(err){
+    if (err){
+      var error = new Error();
+      error.message = "Error deleting apartment with name "+request.guestName + '/n' + err;
+      next(error);
+    } else {
+      response.status(200).send("Resource deleted");
+    }
+  })
 });
 
 

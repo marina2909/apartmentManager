@@ -13,6 +13,9 @@ angular.module("apartmentManagement")
          },
          create: function(appObj) {
            return $http({method: 'POST', url: '/apartments', data: appObj});
-         }
+         },
+         delete: function(name){
+           return $http({method:'DELETE', url: '/apartments/' + name});
+     		 }
        };
   });

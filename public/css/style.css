@@ -1,9 +1,9 @@
 body {
-   /*  background-image: url("light_alu.png"); */
-	/*font-family: 'Open Sans', sans-serifb !important;
+  background-image: url("light_alu.png"); */
+	font-family: 'Open Sans', sans-serifb !important;
   margin: 0;
   padding: 0;
-  color: #333;*/
+  color: #333;
 }
 /*h1, h2{
     font-weight: bold;
@@ -49,6 +49,13 @@ a.list-group-item:hover {
 .apartment {
   margin-bottom: 30px;
 }*/
+
+.main-title{
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 20px 0;
+    color: #3C860C;
+}
 
 .guests-wrapper{
 	overflow: auto;

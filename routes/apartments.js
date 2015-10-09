@@ -6,6 +6,7 @@ var parseUrlEncoded = bodyParser.json();
 
 var mongoose = require('mongoose');
 var Apartments = mongoose.model('Apartments');
+var ApartmentServices = mongoose.model('ApartmentServices');
 
 // var apartments = [
 //   {
@@ -42,21 +43,20 @@ var Apartments = mongoose.model('Apartments');
 
 
 router.route('/')
-.put(parseUrlEncoded, function(request, response, next){
+.post(parseUrlEncoded, function(request, response, next){
   var newBody = request.body;
   var name = newBody.name;
   newBody.name = name[0].toUpperCase() + name.slice(1).toLowerCase();
   var apartments = new Apartments(newBody);
-  apartments.isNew = false;
-  apartments.save(function(err, apartment){
-   if (err){
-     var error = new Error();
-     error.message = "Error executing  PUT call to /apartments /n" + err;
-     next(error);
-   } else {
-     response.status(201).json(newBody.name);
-   }
- });
+  apartments.save(function(err, guest){
+    if (err){
+      var error = new Error();
+      error.message = "Error executing  POST call to /apartments";
+      next(error);
+    } else {
+      response.status(201).json(newBody.name);
+    }
+  });
 })
 .get(function(request, response, next){
   Apartments.find(function(err, apartments){
@@ -69,8 +69,6 @@ router.route('/')
     }
   });
 });
-
-
 
 router.route('/:name')
 .all(function(request, response, next){
@@ -90,18 +88,54 @@ router.route('/:name')
     }
   });
 })
-.delete(function(request, response){
-  Apartments.findOneAndRemove({name : request.apartmentName}, function(err){
-    if (err){
+.put(parseUrlEncoded, function(request, response, next){
+  var newBody = request.body;
+  var name = newBody.name;
+  var apartment;
+  newBody.name = name[0].toUpperCase() + name.slice(1).toLowerCase();
+
+  // fetch by name
+  Apartments.find({name : request.apartmentName}, function(err, apartm){
+    if(err){
       var error = new Error();
-      error.message = "Error deleting apartment with name "+request.guestName + '/n' + err;
+      error.message = "Error executing  PUT call to /apartments /n" + err;
       next(error);
     } else {
-      response.status(200).send("Resource deleted");
+      apartment = apartm[0];
+      // prepare for update
+      apartment.price = newBody.price;
+      apartment.description = newBody.description;
+      apartment.size = newBody.size;
+      apartment.rooms = newBody.rooms;
+      apartment.defaultOccupancy = newBody.defaultOccupancy;
+      apartment.maxOccupancy = newBody.maxOccupancy;
+      apartment.services = newBody.services;
+      // do update
+      var apartments = new Apartments(apartment);
+      apartments.isNew = false;
+      apartments.save(function(err, apartment){
+       if (err){
+         var error = new Error();
+         error.message = "Error executing  PUT call to /apartments /n" + err;
+         next(error);
+       } else {
+         response.status(200).json(newBody.name);
+       }
+     });
     }
-  })
+  });
+})
+.delete(function(request, response){
+    Apartments.findOneAndRemove({name : request.apartmentName}, function(err) {
+      if (err){
+        var error = new Error();
+        error.message = "Error deleting apartment with name "+request.guestName + '/n' + err;
+        next(error);
+      } else {
+          response.status(200).send("Resource deleted");
+      }
+    });
 });
-
 
 router.use(function log(err, req, res, next) {
 	res.status(500);

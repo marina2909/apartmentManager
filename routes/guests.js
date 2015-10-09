@@ -71,13 +71,9 @@ router.route('/:name')
 			response.json(description);
 		}
 	})
-	.put(function(request, response){
-
-	})
 	.delete(function(request, response){
 		Guests.findOneAndRemove({name : request.guestName}, function(err){
 			if (err){
-				console.log('err');
 				var error = new Error();
 				error.message = "Error deleting guest with name "+request.guestName;
 				next(error);
@@ -86,8 +82,38 @@ router.route('/:name')
 			}
 		})
 	})
-	.put(function(request, response){
+	.put(parseUrlEncoded, function(request, response, next){
+	  var newBody = request.body;
+	  var name = newBody.name;
+	  var guest;
+	  newBody.name = name[0].toUpperCase() + name.slice(1).toLowerCase();
 
+	  // fetch by name
+	  Guests.find({name : request.guestName}, function(err, gst){
+	    if(err){
+	      var error = new Error();
+	      error.message = "Error executing  PUT call to /guests /n" + err;
+	      next(error);
+	    } else {
+	      guest = gst[0];
+	      // prepare for update
+	      guest.birthdate = newBody.birthdate;
+	      guest.nationality = newBody.nationality;
+
+	      // do update
+	      var guests = new Guests(guest);
+	      guests.isNew = false;
+	      guests.save(function(err, guest){
+	       if (err){
+	         var error = new Error();
+	         error.message = "Error executing  PUT call to /guests /n" + err;
+	         next(error);
+	       } else {
+	         response.status(200).json(newBody.name);
+	       }
+			 	});
+			};
+	  });
 	});
 
 

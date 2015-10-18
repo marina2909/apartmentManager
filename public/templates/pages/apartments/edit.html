@@ -1,37 +1,53 @@
-<form>
+<am-header-bar title='Editing apartment : {{apartment.name}}' link='#/apartments/{{apartment.name}}'></am-header-bar>
+<form name='editForm'>
   <fieldset>
     <div class='row'>
       <div class='form-group col-sm-6'>
         <label for='title'>Title</label>
-        <input class='form-control' type='text' id='title' ng-model='apartment.name'/>
+        <input class='form-control' type='text' id='title' required="true" ng-model='apartment.name'/>
       </div>
       <div class='form-group col-sm-6'>
         <label for='price'>Price</label>
-        <input class='form-control' type='text' id='price' ng-model='apartment.price'/>
+        <input class='form-control' type='text' id='price' required="true" ng-model='apartment.price'/>
       </div>
     </div>
   </fieldset>
   <fieldset class='form-group'>
     <label for='description'>Description</label>
-    <textarea class='form-control' type='text' id='description' ng-model='apartment.description'></textarea>
+    <textarea class='form-control' type='text' id='description' required="true" ng-model='apartment.description'></textarea>
   </fieldset>
   <fieldset>
       <div class='row'>
           <div class='form-group col-sm-4'>
               <label for="rooms">Rooms</label>
-              <input class="form-control" id="rooms" ng-model='apartment.rooms' size="30" type="text" />
+              <input class="form-control" id="rooms" ng-model='apartment.rooms' required="true" size="30" type="text" />
           </div>
           <div class='form-group col-sm-4'>
               <label for="defaultOccupancy">Def. Occupancy</label>
-              <input class="form-control" id="defaultOccupancy" ng-model="apartment.defaultOccupancy" required="true" size="30" type="text" />
+              <input class="form-control" id="defaultOccupancy" ng-model="apartment.defaultOccupancy" size="30" type="text" />
           </div>
           <div class='form-group col-sm-4'>
               <label for="user_lastname">Max Occupancy</label>
-              <input class="form-control" id="maxOccupancy" ng-model="apartment.maxOccupancy" required="true" size="30" type="text" />
+              <input class="form-control" id="maxOccupancy" ng-model="apartment.maxOccupancy"  size="30" type="text" />
           </div>
       </div>
   </fieldset>
+  <div class="panel panel-default">
+    <div class="panel-heading">Armenities</div>
+    <div class="panel-body">
+      <label class="checkbox-inline" ng-repeat="armenity in armenities">
+        <input type="checkbox"
+          id="{{armenity.name}}"
+          ng-checked="armenity.active"
+          ng-model="clickedArmenities[$index]"
+          ng-change="setArmenity(armenity.name, $index)">
+          {{armenity.name}}
+      </label>
+    </div>
+  </div>
+
+  <am-armenities-click armenities='apartment.armenities' apartment='apartment'></am-armenities-click>
   <div class='row'>
-      <input type='submit' class='btn btn-success col-xs-12 col-sm-6 col-sm-offset-3' ng-click='updateApartment(apartment)' value='Save'>
+      <input type='submit' class='btn btn-success col-xs-12 col-sm-6 col-sm-offset-3' ng-click='editForm.$valid && updateApartment(apartment)' value='Save'>
   </div>
 </form>

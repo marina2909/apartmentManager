@@ -8,13 +8,12 @@
 	</head>
 <body>
 	<div class="container">
-		<h1 class='main-title'>Apartment Management System</h1>
 		<div class="view col-md-12" ng-view>
 		</div>
 	</div>
 	<script src="javascript/lib/jquery-1.10.2.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
-	<script src="javascript/lib/angular-route.min.js"></script>
+  <script src="javascript/lib/angular-route.min.js"></script>
   <script src="javascript/lib/angular-resource.min.js"></script>
 	<script src="javascript/lib/bootstrap.min.js"></script>
 
@@ -24,19 +23,23 @@
   <!-- services -->
   <script src="javascript/services/guests.js"></script>
   <script src="javascript/services/apartment.js"></script>
+  <script src="javascript/services/armenities.js"></script>
+  <script src="javascript/services/bookings.js"></script>
 
 	<script src="javascript/controllers/guests-controller.js"></script>
 	<script src="javascript/controllers/apartments-index-controller.js"></script>
+  <script src="javascript/controllers/bookings-index-controller.js"></script>
   <script src="javascript/controllers/apartments-show-controller.js"></script>
   <script src="javascript/controllers/apartments-edit-controller.js"></script>
-
+  <script src="javascript/controllers/apartments-new-controller.js"></script>
   <!-- directives -->
 	<script src="javascript/directives/modal-dialog.js"></script>
 	<script src="javascript/directives/am-guest.js"></script>
+  <script src="javascript/directives/am-apartment-simple.js"></script>
   <script src="javascript/directives/am-apartment.js"></script>
-  <script src="javascript/directives/apartment-services.js"></script>
-
-
+  <script src="javascript/directives/am-armenities-show.js"></script>
+  <script src="javascript/directives/am-armenities-click.js"></script>
+  <script src="javascript/directives/am-header-bar.js"></script>
 
 </body>
 </html>

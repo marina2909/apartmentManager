@@ -6,6 +6,7 @@ var parseUrlEncoded = bodyParser.json();
 
 var mongoose = require('mongoose');
 var Guests = mongoose.model('Guests');
+var DATABASE_ERROR = "API database error : ";
 
 var guests = [
 	{"name" : "Small1",
@@ -42,7 +43,7 @@ router.route('/')
 		guests.save(function(err, guest){
 			if (err){
 				var error = new Error();
-				error.message = "Error executing  GET call to /guests";
+				error.message = DATABASE_ERROR + "Executing  GET call to /guests";
 				next(error);
 			} else {
 				response.status(201).json(newBody.name);
@@ -75,7 +76,7 @@ router.route('/:name')
 		Guests.findOneAndRemove({name : request.guestName}, function(err){
 			if (err){
 				var error = new Error();
-				error.message = "Error deleting guest with name "+request.guestName;
+				error.message = DATABASE_ERROR + "Deleting guest with name "+request.guestName;
 				next(error);
 			} else {
 				response.status(200).send("Resource deleted");
@@ -92,7 +93,7 @@ router.route('/:name')
 	  Guests.find({name : request.guestName}, function(err, gst){
 	    if(err){
 	      var error = new Error();
-	      error.message = "Error executing  PUT call to /guests /n" + err;
+	      error.message = DATABASE_ERROR + "Executing  PUT call to /guests /n" + err;
 	      next(error);
 	    } else {
 	      guest = gst[0];
@@ -106,7 +107,7 @@ router.route('/:name')
 	      guests.save(function(err, guest){
 	       if (err){
 	         var error = new Error();
-	         error.message = "Error executing  PUT call to /guests /n" + err;
+	         error.message = DATABASE_ERROR + "Executing  PUT call to /guests /n" + err;
 	         next(error);
 	       } else {
 	         response.status(200).json(newBody.name);
@@ -116,11 +117,17 @@ router.route('/:name')
 	  });
 	});
 
+// catch 404
+router.use(function(req, res, next){
+	var error = new Error('Not Found');
+	error.status = 404;
+	next(error);
+});
 
+// error handler
 router.use(function log(err, req, res, next) {
-	res.status(500);
+	res.status(err.status || 500);
 	res.send(err.message);
-
 });
 
 module.exports = router;

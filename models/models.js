@@ -6,7 +6,7 @@ var guestsSchema = new mongoose.Schema({
 		nationality : { type : String, required: true }
 });
 
-var apartmentServicesSchema = new mongoose.Schema({
+var armenitiesSchema = new mongoose.Schema({
     name: String,
 		active: Boolean
 });
@@ -19,7 +19,22 @@ var apartmentsSchema = new mongoose.Schema({
 	rooms: Number,
 	defaultOccupancy: Number,
 	maxOccupancy: Number,
-	services: [apartmentServicesSchema]
+	armenities: [armenitiesSchema]
+});
+
+var bookingsSchema = new mongoose.Schema({
+	 bookingDate: { type: Date, default: Date.now },
+	 arrivalDate: { type: Date, default: Date.now },
+	 departureDate: { type: Date, default: Date.now },
+	 arrivalTime: String,
+	 apartment: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Apartments'
+	 },
+	 guests: [{
+		 type: String,
+		 ref: 'Guests'
+	 }]
 });
 
 
@@ -27,4 +42,5 @@ var apartmentsSchema = new mongoose.Schema({
 // TO DO do services request
 mongoose.model("Guests", guestsSchema);
 mongoose.model("Apartments", apartmentsSchema);
-mongoose.model("ApartmentServices", apartmentServicesSchema);
+mongoose.model("Armenities", armenitiesSchema);
+mongoose.model("Bookings", bookingsSchema);

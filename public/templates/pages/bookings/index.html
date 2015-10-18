@@ -1,0 +1,29 @@
+<am-header-bar title='BOOKINGS' link='/'></am-header-bar>
+<div id='small-screen-table'>
+  <table class="col-md-12 table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Apartment</th>
+        <th>Arrival Date</th>
+        <th>Departure Date</th>
+        <th>Arrival Time</th>
+        <th>Booking Date</th>
+        <th>Guests</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class='success' ng-repeat="booking in bookings">
+        <td data-title='Apartment'>{{booking.apartment.name}}</td>
+        <td data-title='Arrival Date'>{{booking.arrivalDate | date : mediumDate}}</td>
+        <td data-title='Departure Date'>{{booking.departureDate | date : mediumDate}}</td>
+        <td data-title='Arrival Time'>{{booking.arrivalTime}}</td>
+        <td data-title='Booking Date'>{{booking.bookingDate  | date : mediumDate}}</td>
+        <td data-title='Guests'>
+          <span ng-repeat="guest in booking.guests">
+            <div>{{guest}}</div>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

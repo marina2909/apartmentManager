@@ -4,6 +4,6 @@ angular.module("apartmentManagement")
       .then(function success(response){
     		$scope.apartments = response.data;
     	}, function error(response){
-        $scope.error = respose.data;
+        $scope.error = response.data;
     	});
 });

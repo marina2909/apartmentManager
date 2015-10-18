@@ -1,5 +1,19 @@
+<am-header-bar title='APARTMENTS' link='/'></am-header-bar>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="input-group">
+      <input ng-model='searchText' type="text" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn">
+        <a ng-href='#/apartments/new' class='btn btn-primary hidden-xs'>New Apartment</a>
+        <a ng-href='#/apartments/new' class='btn btn-primary visible-xs'>
+          <span class="glyphicon glyphicon-plus"></span>
+        </a>
+      </span>
+    </div>
+  </div>
+</div>
 <div class="panel-group apartment text-center">
-  <div ng-repeat="apartment in apartments">
-    <am-apartment apartment='apartment'><am-apartment>
+  <div ng-repeat="apartment in apartments | orderBy : 'name'| filter : searchText">
+    <am-apartment-simple apartment='apartment'><am-apartment-simple>
   </div>
 </div>

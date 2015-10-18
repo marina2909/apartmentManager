@@ -18,11 +18,15 @@ angular.module('apartmentManagement', ['ngRoute'])
 		})
 		.when('/apartments/new', {
 			templateUrl : '/templates/pages/apartments/new.html',
-			controller : 'ApartmentsIndexController'
+			controller : 'ApartmentsNewController'
 		})
 		.when('/apartments/:name', {
 			templateUrl : '/templates/pages/apartments/show.html',
 			controller : 'ApartmentsShowController'
+		})
+		.when('/bookings', {
+				templateUrl : '/templates/pages/bookings/index.html',
+				controller : 'BookingsIndexController'
 		});
 
 		// .otherwise({redirectTo : '/guests'});

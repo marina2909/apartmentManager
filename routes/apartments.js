@@ -6,41 +6,8 @@ var parseUrlEncoded = bodyParser.json();
 
 var mongoose = require('mongoose');
 var Apartments = mongoose.model('Apartments');
-var ApartmentServices = mongoose.model('ApartmentServices');
-
-// var apartments = [
-//   {
-//     name : 'Apartment 1',
-//     price: '30$',
-//     description: 'This is very nice apartment',
-//     size: '60m2',
-//     rooms: 3,
-//     defaultOccupancy: 2,
-//     maxOccupancy: 4,
-//     services: [ 'wifi', 'laundry']
-//   },
-//   {
-//     name : 'Apartment 2',
-//     price: '50$',
-//     description: 'This is middle size apartment',
-//     size: '64m2',
-//     rooms: 2,
-//     defaultOccupancy: 3,
-//     maxOccupancy: 5,
-//     services: [ 'wifi', 'airconditioning']
-//   },
-//   {
-//     name : 'Apartment3',
-//     price: '60$',
-//     description: 'This is the biggest apartment',
-//     size: '90m2',
-//     rooms: 1,
-//     defaultOccupancy: 2,
-//     maxOccupancy: 4,
-//     services: [ 'dishwasher', 'laundry' ]
-//   }
-// ];
-
+var Armenities = mongoose.model('Armenities');
+var DATABASE_ERROR = "API database error : ";
 
 router.route('/')
 .post(parseUrlEncoded, function(request, response, next){
@@ -48,10 +15,10 @@ router.route('/')
   var name = newBody.name;
   newBody.name = name[0].toUpperCase() + name.slice(1).toLowerCase();
   var apartments = new Apartments(newBody);
-  apartments.save(function(err, guest){
+  apartments.save(function(err, apartment){
     if (err){
       var error = new Error();
-      error.message = "Error executing  POST call to /apartments";
+      error.message = DATABASE_ERROR + "Executing  POST call to /apartments";
       next(error);
     } else {
       response.status(201).json(newBody.name);
@@ -62,7 +29,7 @@ router.route('/')
   Apartments.find(function(err, apartments){
     if (err){
       var error = new Error();
-      error.message = "Error executing  GET call to /apartments";
+      error.message = DATABASE_ERROR + "Executing  GET call to /apartments";
       next(error);
     } else {
       response.json(apartments);
@@ -81,7 +48,7 @@ router.route('/:name')
   Apartments.find({name : request.apartmentName}, function(err, apartment){
     if (err){
       var error = new Error();
-      error.message = "Error executing  GET call to /apartments/"+request.apartmentName;
+      error.message = DATABASE_ERROR + "Executing  GET call to /apartments/"+request.apartmentName;
       next(error);
     } else {
       response.json(apartment[0]);
@@ -98,7 +65,7 @@ router.route('/:name')
   Apartments.find({name : request.apartmentName}, function(err, apartm){
     if(err){
       var error = new Error();
-      error.message = "Error executing  PUT call to /apartments /n" + err;
+      error.message = DATABASE_ERROR + "Executing  PUT call to /apartments /n" + err;
       next(error);
     } else {
       apartment = apartm[0];
@@ -109,14 +76,15 @@ router.route('/:name')
       apartment.rooms = newBody.rooms;
       apartment.defaultOccupancy = newBody.defaultOccupancy;
       apartment.maxOccupancy = newBody.maxOccupancy;
-      apartment.services = newBody.services;
+      apartment.armenities = newBody.armenities;
+
       // do update
       var apartments = new Apartments(apartment);
       apartments.isNew = false;
       apartments.save(function(err, apartment){
        if (err){
          var error = new Error();
-         error.message = "Error executing  PUT call to /apartments /n" + err;
+         error.message = DATABASE_ERROR + "Executing  PUT call to /apartments /n" + err;
          next(error);
        } else {
          response.status(200).json(newBody.name);
@@ -129,7 +97,7 @@ router.route('/:name')
     Apartments.findOneAndRemove({name : request.apartmentName}, function(err) {
       if (err){
         var error = new Error();
-        error.message = "Error deleting apartment with name "+request.guestName + '/n' + err;
+        error.message = DATABASE_ERROR + "Deleting apartment with name "+request.guestName + '/n' + err;
         next(error);
       } else {
           response.status(200).send("Resource deleted");
@@ -137,8 +105,16 @@ router.route('/:name')
     });
 });
 
+// catch 404
+router.use(function(req, res, next){
+	var error = new Error('Not Found');
+	error.status = 404;
+	next(error);
+});
+
+// error handler
 router.use(function log(err, req, res, next) {
-	res.status(500);
+	res.status(err.status || 500);
 	res.send(err.message);
 });
 

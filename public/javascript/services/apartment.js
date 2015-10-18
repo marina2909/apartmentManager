@@ -9,7 +9,7 @@ angular.module("apartmentManagement")
            return $http({method:'GET', url: '/apartments/' + name});
          },
          update: function(appObj) {
-            return $http({method: 'PUT', url: '/apartments', data: appObj});
+            return $http({method: 'PUT', url: '/apartments/' + appObj.name, data: appObj});
          },
          create: function(appObj) {
            return $http({method: 'POST', url: '/apartments', data: appObj});

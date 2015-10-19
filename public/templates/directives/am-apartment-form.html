@@ -1,0 +1,88 @@
+<form name='apartmentForm'>
+  <fieldset>
+    <div class='row'>
+      <div class='form-group col-sm-6'>
+        <label for='apartmentName'>Name</label>
+        <input class='form-control'
+          type='text'
+          id='apartmentName'
+          name='apartmentName'
+          ng-minlength="3"
+          ng-maxlength="20"
+          required
+          ng-model='apartment.name'/>
+          <div class="error" ng-show="apartmentForm.apartmentName.$dirty
+            && (apartmentForm.apartmentName.$error.required
+            || apartmentForm.apartmentName.$error.minlength
+            || apartmentForm.apartmentName.$error.maxlength)">Must be between 3 and 20 characters long</div>
+      </div>
+      <div class='form-group col-sm-6'>
+        <label for='price'>Price</label>
+        <input class='form-control'
+          required
+          name = "price"
+          id="price"
+          type="number"
+          ng-model='apartment.price'/>
+          <div class="error" ng-show="apartmentForm.price.$dirty && apartmentForm.price.$error.required">Price is required</div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset class='form-group'>
+    <label for='description'>Description</label>
+    <textarea class='form-control'
+      type='text'
+      id='description'
+      name='apartmentDescription'
+      ng-minlength="3"
+      ng-maxlength="100"
+      required
+      ng-model='apartment.description'/>
+      <div class="error" ng-show="apartmentForm.apartmentDescription.$dirty
+        && (apartmentForm.apartmentDescription.$error.required
+        || apartmentForm.apartmentDescription.$error.minlength
+        || apartmentForm.apartmentDescription.$error.maxlength)">Must be between 3 and 100 characters long</div>
+  </fieldset>
+  <fieldset>
+      <div class='row'>
+          <div class='form-group col-sm-4'>
+              <label for="rooms">Rooms</label>
+              <input class="form-control"
+                id="rooms"
+                name = 'rooms'
+                ng-model='apartment.rooms'
+                required="true"
+                size="30"
+                type="number" />
+              <div class="error" ng-show="apartmentForm.rooms.$dirty && apartmentForm.rooms.$error.required">Rooms is required</div>
+          </div>
+          <div class='form-group col-sm-4'>
+              <label for="defaultOccupancy">Def. Occupancy</label>
+              <input class="form-control"
+                id="defaultOccupancy"
+                name="defaultOccupancy"
+                ng-model="apartment.defaultOccupancy"
+                size="30"
+                type="number"
+                required/>
+              <div class="error" ng-show="apartmentForm.defaultOccupancy.$dirty && apartmentForm.defaultOccupancy.$error.required">Default occupancy is required</div>
+          </div>
+          <div class='form-group col-sm-4'>
+              <label for="user_lastname">Max Occupancy</label>
+              <input class="form-control"
+                id="maxOccupancy"
+                name="maxOccupancy"
+                ng-model="apartment.maxOccupancy"
+                size="30"
+                type="number"
+                required/>
+              <div class="error" ng-show="apartmentForm.maxOccupancy.$dirty && apartmentForm.maxOccupancy.$error.required">Max occupancy is required</div>
+          </div>
+      </div>
+  </fieldset>
+
+  <am-armenities-click armenities='apartment.armenities' apartment='apartment'></am-armenities-click>
+  <div class='row'>
+      <input type='submit' class='btn btn-success col-xs-12 col-sm-6 col-sm-offset-3' ng-click='apartmentForm.$valid && submitApartment(apartment)' value='Save'>
+  </div>
+</form>

@@ -3,8 +3,6 @@ angular.module("apartmentManagement")
    return {
      restrict: 'E',
      templateUrl : "templates/directives/am-apartment-simple.html",
-     scope:{
-       apartment : "="
-     }
+     scope : true
    };
 })

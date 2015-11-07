@@ -1,17 +1,17 @@
-
-<td>{{guest.name}}</td>
+<td>
+    {{guest.name}}</td>
 <td>{{guest.birthdate}}</td>
 <td>{{guest.nationality}}</td>
 <td>
-	<button  type="button" class="btn btn-danger btn-xs btn-round" ng-click="removeGuest($event, guest.name)">
-		<span class="glyphicon glyphicon-trash"></span>
-	</button>
-	<button   type="button" class="btn btn-warning btn-xs btn-round" data-toggle="modal" data-target="#myModal" ng-click="setGuestName(guest)">
-		<span class="glyphicon glyphicon-edit"></span>
-	</button>
+    <button type="button" class="btn btn-danger btn-xs btn-round" ng-click="removeGuest($event, guest.name)">
+        <span class="glyphicon glyphicon-trash"></span>
+    </button>
+    <button type="button" class="btn btn-warning btn-xs btn-round" data-toggle="modal" data-target="#myModal" ng-click="setGuestName(guest)">
+        <span class="glyphicon glyphicon-edit"></span>
+    </button>
 </td>
 <td>
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-	  Bookings
-	</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Bookings
+    </button>
 </td>

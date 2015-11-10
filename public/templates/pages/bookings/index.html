@@ -24,6 +24,16 @@
                         <div>{{guest}}</div>
                     </span>
                 </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-xs btn-round" ng-click="removeBooking(booking._id)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <span>
+                        <a href="#/bookings/{{booking._id}}/edit" class="btn btn-warning btn-xs">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </span>
+                </td>
             </tr>
         </tbody>
     </table>

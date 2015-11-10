@@ -1,49 +1,31 @@
-<form name='apartmentForm'>
+<am-header-bar title='NEW BOOKING' link='/#/bookings'></am-header-bar>
+<form name='bookingForm'>
     <fieldset>
         <div class='row'>
-            <div class='form-group col-sm-6'>
-                <label for='apartmentName'>Name</label>
-                <input class='form-control' type='text' id='apartmentName' name='apartmentName' ng-minlength="3" ng-maxlength="20" required ng-model='apartment.name' />
-                <div class="error" ng-show="apartmentForm.apartmentName.$dirty
-            && (apartmentForm.apartmentName.$error.required
-            || apartmentForm.apartmentName.$error.minlength
-            || apartmentForm.apartmentName.$error.maxlength)">Must be between 3 and 20 characters long</div>
+            <div class="form-group col-sm-6">
+                <label for='apartment'>Apartment</label>
+                <select class='form-control' id='apartment' ng-model="apartmentSelected" ng-change="onChangeApartment(apartmentSelected)" data-ng-options="apartment as apartment.name for apartment in apartments">
+                    <option value="">Select Apartment</option>
+                </select>
             </div>
             <div class='form-group col-sm-6'>
-                <label for='price'>Price</label>
-                <input class='form-control' required name="price" id="price" type="number" ng-model='apartment.price' />
-                <div class="error" ng-show="apartmentForm.price.$dirty && apartmentForm.price.$error.required">Price is required</div>
+                <label for='arrivalTime'>Arrival Time</label>
+                <input class='form-control' required id="arrivalTime" type="string" ng-model='booking.arrivalTime' />
+                <div class="error" ng-show="bookingForm.arrivalTime.$dirty && bookingForm.arrivalTime.$error.required">Arrival Time is required field</div>
             </div>
-        </div>
-    </fieldset>
-    <fieldset class='form-group'>
-        <label for='description'>Description</label>
-        <textarea class='form-control' type='text' id='description' name='apartmentDescription' ng-minlength="3" ng-maxlength="100" required ng-model='apartment.description' />
-        <div class="error" ng-show="apartmentForm.apartmentDescription.$dirty
-        && (apartmentForm.apartmentDescription.$error.required
-        || apartmentForm.apartmentDescription.$error.minlength
-        || apartmentForm.apartmentDescription.$error.maxlength)">Must be between 3 and 100 characters long</div>
-    </fieldset>
-    <fieldset>
-        <div class='row'>
-            <div class='form-group col-sm-4'>
-                <label for="rooms">Rooms</label>
-                <input class="form-control" id="rooms" name='rooms' ng-model='apartment.rooms' required="true" size="30" type="number" />
-                <div class="error" ng-show="apartmentForm.rooms.$dirty && apartmentForm.rooms.$error.required">Rooms is required</div>
+            <div class='form-group col-sm-6'>
+                <label for='arrivalDate'>Arrival Date</label>
+                <input class='form-control' required id="arrivalDate" type="date" ng-model='booking.arrivalDate' />
+                <div class="error" ng-show="bookingForm.arrivalDate.$dirty && bookingForm.arrivalDate.$error.required">Arrival Date is required field</div>
             </div>
-            <div class='form-group col-sm-4'>
-                <label for="defaultOccupancy">Def. Occupancy</label>
-                <input class="form-control" id="defaultOccupancy" name="defaultOccupancy" ng-model="apartment.defaultOccupancy" size="30" type="number" required/>
-                <div class="error" ng-show="apartmentForm.defaultOccupancy.$dirty && apartmentForm.defaultOccupancy.$error.required">Default occupancy is required</div>
-            </div>
-            <div class='form-group col-sm-4'>
-                <label for="user_lastname">Max Occupancy</label>
-                <input class="form-control" id="maxOccupancy" name="maxOccupancy" ng-model="apartment.maxOccupancy" size="30" type="number" required/>
-                <div class="error" ng-show="apartmentForm.maxOccupancy.$dirty && apartmentForm.maxOccupancy.$error.required">Max occupancy is required</div>
+            <div class='form-group col-sm-6'>
+                <label for='departureDate'>Departure Date</label>
+                <input class='form-control' required id="departureDate" type="date" ng-model='booking.departureDate' />
+                <div class="error" ng-show="bookingForm.departureDate.$dirty && bookingForm.departureDate.$error.required">Departure Date is required field</div>
             </div>
         </div>
     </fieldset>
     <div class='row'>
-        <input type='submit' class='btn btn-success col-xs-12 col-sm-6 col-sm-offset-3' ng-click='apartmentForm.$valid && submitApartment(apartment)' value='Save'>
+        <input type='submit' class='btn btn-success col-xs-12 col-sm-6 col-sm-offset-3' ng-click='bookingForm.$valid && saveBooking(booking)' value='Save'>
     </div>
 </form>

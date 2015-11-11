@@ -1,13 +1,19 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-
+var helper = require('./misc.js');
 var router = express.Router();
 var parseUrlEncoded = bodyParser.json();
 
 var mongoose = require('mongoose');
 var Apartments = mongoose.model('Apartments');
 var Armenities = mongoose.model('Armenities');
-var DATABASE_ERROR = "API database error : ";
+
+var sendErrorResponse = function(next, status, msg) {
+    var error = new Error();
+    error.status = status;
+    error.message = "Executing call to /apartments. " + msg;
+    next(error);
+}
 
 router.route('/')
     .post(parseUrlEncoded, function(request, response, next) {
@@ -17,9 +23,8 @@ router.route('/')
         var apartments = new Apartments(newBody);
         apartments.save(function(err, apartment) {
             if (err) {
-                var error = new Error();
-                error.message = DATABASE_ERROR + "Executing  POST call to /apartments";
-                next(error);
+                sendErrorResponse(next, 400, helper.getDatabaseMessages(err));
+                return;
             } else {
                 response.status(201).json(newBody.name);
             }
@@ -28,86 +33,95 @@ router.route('/')
     .get(function(request, response, next) {
         Apartments.find(function(err, apartments) {
             if (err) {
-                var error = new Error();
-                error.message = DATABASE_ERROR + "Executing  GET call to /apartments";
-                next(error);
-            } else {
-                response.json(apartments);
+                sendErrorResponse(next, 400, helper.getDatabaseMessages(err));
+                return;
             }
+            if (!apartments || apartments.length == 0) {
+                sendErrorResponse(next, 204, 'No content');
+                return;
+            }
+            response.json(apartments);
         });
     });
 
-router.route('/:name')
+router.route('/:id')
     .all(function(request, response, next) {
-        var name = request.params.name;
-        var block = name[0].toUpperCase() + name.slice(1).toLowerCase();
-        request.apartmentName = block;
+        request.apartmentID = request.params.id;
         next();
     })
     .get(function(request, response) {
-        Apartments.find({
-            name: request.apartmentName
+        Apartments.findOne({
+            _id: request.apartmentID
         }, function(err, apartment) {
             if (err) {
-                var error = new Error();
-                error.message = DATABASE_ERROR + "Executing  GET call to /apartments/" + request.apartmentName;
-                next(error);
-            } else {
-                response.json(apartment[0]);
+                sendErrorResponse(next, 400, helper.getDatabaseMessages(err));
+                return;
             }
+            response.json(apartment);
         });
     })
     .put(parseUrlEncoded, function(request, response, next) {
         var newBody = request.body;
-        var name = newBody.name;
-        var apartment;
-        newBody.name = name[0].toUpperCase() + name.slice(1).toLowerCase();
 
-        // fetch by name
-        Apartments.find({
-            name: request.apartmentName
-        }, function(err, apartm) {
+        // fetch by id
+        Apartments.findOne({
+            _id: request.apartmentID
+        }, function(err, apartment) {
             if (err) {
-                var error = new Error();
-                error.message = DATABASE_ERROR + "Executing  PUT call to /apartments /n" + err;
-                next(error);
-            } else {
-                apartment = apartm[0];
-                // prepare for update
-                apartment.price = newBody.price;
-                apartment.description = newBody.description;
-                apartment.size = newBody.size;
-                apartment.rooms = newBody.rooms;
-                apartment.defaultOccupancy = newBody.defaultOccupancy;
-                apartment.maxOccupancy = newBody.maxOccupancy;
-                apartment.armenities = newBody.armenities;
-
-                // do update
-                var apartments = new Apartments(apartment);
-                apartments.isNew = false;
-                apartments.save(function(err, apartment) {
-                    if (err) {
-                        var error = new Error();
-                        error.message = DATABASE_ERROR + "Executing  PUT call to /apartments /n" + err;
-                        next(error);
-                    } else {
-                        response.status(200).json(newBody.name);
-                    }
-                });
+                sendErrorResponse(next, 400, helper.getDatabaseMessages(err));
+                return;
             }
+            if (!apartment) {
+                sendErrorResponse(next, 404, 'Record is not found');
+                return;
+            }
+            // prepare for update
+            apartment.price = newBody.price;
+            apartment.description = newBody.description;
+            apartment.size = newBody.size;
+            apartment.rooms = newBody.rooms;
+            apartment.defaultOccupancy = newBody.defaultOccupancy;
+            apartment.maxOccupancy = newBody.maxOccupancy;
+            apartment.armenities = newBody.armenities;
+
+            // do update
+            var apartments = new Apartments(apartment);
+            apartments.isNew = false;
+            apartments.save(function(err, apartment) {
+                if (err) {
+                    sendErrorResponse(next, 400, helper.getDatabaseMessages(err));
+                    next(error);
+                } else {
+                    response.status(200).json(apartment);
+                }
+            });
+
         });
     })
     .delete(function(request, response) {
-        Apartments.findOneAndRemove({
-            name: request.apartmentName
-        }, function(err) {
+
+        Apartments.findOne({
+            _id: request.apartmentID
+        }, function(err, apartment) {
             if (err) {
-                var error = new Error();
-                error.message = DATABASE_ERROR + "Deleting apartment with name " + request.guestName + '/n' + err;
-                next(error);
-            } else {
-                response.status(200).send("Resource deleted");
+                sendErrorResponse(next, 400, helper.getDatabaseMessages(err));
+                return;
             }
+            if (!apartment) {
+                sendErrorResponse(next, 404, 'Apartment not found.');
+                return;
+            }
+
+            Apartments.findOneAndRemove({
+                _id: request.apartmentID
+            }, function(err2) {
+                if (err2) {
+                    sendErrorResponse(next, 400, helper.getDatabaseMessages(err2));
+                    return;
+                }
+                response.status(200).send("Resource deleted");
+            });
+
         });
     });
 

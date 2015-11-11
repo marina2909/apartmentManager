@@ -6,7 +6,6 @@ var parseUrlEncoded = bodyParser.json();
 
 var mongoose = require('mongoose');
 var Bookings = mongoose.model('Bookings');
-var DATABASE_ERROR = "API database error : ";
 
 var sendErrorResponse = function(next, status, msg) {
     var error = new Error();

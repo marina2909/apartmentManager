@@ -1,0 +1,31 @@
+<am-header-bar title='EDIT BOOKING' link='/#/bookings'></am-header-bar>
+<form name='bookingForm'>
+    <fieldset>
+        <div class='row'>
+            <div class="form-group col-sm-6">
+                <label for='apartment'>Apartment</label>
+                <select class='form-control' id='apartment' ng-model="apartmentSelected" ng-change="onChangeApartment(apartmentSelected)" data-ng-options="apartment as apartment.name for apartment in apartments">
+                    <option value="">Select Apartment</option>
+                </select>
+            </div>
+            <div class='form-group col-sm-6'>
+                <label for='arrivalTime'>Arrival Time</label>
+                <input class='form-control' required id="arrivalTime" type="string" ng-model='booking.arrivalTime' />
+                <div class="error" ng-show="bookingForm.arrivalTime.$dirty && bookingForm.arrivalTime.$error.required">Arrival Time is required field</div>
+            </div>
+            <div class='form-group col-sm-6'>
+                <label for='arrivalDate'>Arrival Date</label>
+                <input class='form-control' required id="arrivalDate" type="date" ng-model='booking.arrivalDate' />
+                <!-- <div class="error" ng-show="bookingForm.arrivalDate.$dirty && bookingForm.arrivalDate.$error.required">Arrival Date is required field</div> -->
+            </div>
+            <div class='form-group col-sm-6'>
+                <label for='departureDate'>Departure Date</label>
+                <input class='form-control' required id="departureDate" type="date" ng-model='booking.departureDate' />
+                <!-- <div class="error" ng-show="bookingForm.departureDate.$dirty && bookingForm.departureDate.$error.required">Departure Date is required field</div> -->
+            </div>
+        </div>
+    </fieldset>
+    <div class='row'>
+        <input type='submit' class='btn btn-success col-xs-12 col-sm-6 col-sm-offset-3' ng-click='bookingForm.$valid && editBooking(booking)' value='Edit'>
+    </div>
+</form>

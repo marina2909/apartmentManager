@@ -12,7 +12,7 @@ angular.module('apartmentManagement', ['ngRoute'])
                 templateUrl: '/templates/pages/apartments/index.html',
                 controller: 'ApartmentsIndexController'
             })
-            .when('/apartments/:name/edit', {
+            .when('/apartments/:id/edit', {
                 templateUrl: '/templates/pages/apartments/edit.html',
                 controller: 'ApartmentsEditController'
             })
@@ -24,7 +24,7 @@ angular.module('apartmentManagement', ['ngRoute'])
                 templateUrl: '/templates/pages/apartments/edit.html',
                 controller: 'ApartmentsEditController'
             })
-            .when('/apartments/:name', {
+            .when('/apartments/:id', {
                 templateUrl: '/templates/pages/apartments/show.html',
                 controller: 'ApartmentsShowController'
             })
@@ -32,9 +32,13 @@ angular.module('apartmentManagement', ['ngRoute'])
                 templateUrl: '/templates/pages/bookings/index.html',
                 controller: 'BookingsIndexController'
             })
+            .when('/bookings/:id/edit', {
+                templateUrl: '/templates/pages/bookings/edit.html',
+                controller: 'BookingsEditController'
+            })
             .when('/bookings/new', {
                 templateUrl: '/templates/pages/bookings/new.html',
-                controller: 'BookingsIndexController'
+                controller: 'BookingsNewController'
             });
 
         // .otherwise({redirectTo : '/guests'});

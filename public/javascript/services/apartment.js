@@ -7,16 +7,16 @@ angular.module("apartmentManagement")
                     url: "/apartments"
                 });
             },
-            find: function(name) {
+            find: function(id) {
                 return $http({
                     method: 'GET',
-                    url: '/apartments/' + name
+                    url: '/apartments/' + id
                 });
             },
             update: function(appObj) {
                 return $http({
                     method: 'PUT',
-                    url: '/apartments/' + appObj.name,
+                    url: '/apartments/' + appObj._id,
                     data: appObj
                 });
             },
@@ -27,10 +27,10 @@ angular.module("apartmentManagement")
                     data: appObj
                 });
             },
-            delete: function(name) {
+            delete: function(id) {
                 return $http({
                     method: 'DELETE',
-                    url: '/apartments/' + name
+                    url: '/apartments/' + id
                 });
             }
         };

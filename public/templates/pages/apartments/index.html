@@ -2,7 +2,6 @@
 <am-search-bar title='New Apartment' link='#/apartments/new' search='searchText'></am-search-bar>
 <div class="panel-group apartment text-center">
     <div ng-repeat="apartment in apartments | orderBy : 'name'| filter : searchText">
-        <am-apartment-simple>
-            <am-apartment-simple>
+        <am-apartment-simple/>
     </div>
 </div>
